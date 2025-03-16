@@ -12,10 +12,18 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
+    // Retrieve full name of input location
     Location locationFullName = Location.fromString(location);
     String locationString = locationFullName.getFullName();
 
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, "", locationString);
+    // Create acronym of operator
+    String[] words = operatorName.split(" ");
+    String locationAcronymn = "";
+    for (String word : words) {
+      locationAcronymn += word.charAt(0);
+    }
+
+    MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationAcronymn, locationString);
   }
 
   public void viewActivities(String operatorId) {
