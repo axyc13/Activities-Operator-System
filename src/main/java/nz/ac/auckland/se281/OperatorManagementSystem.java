@@ -15,15 +15,17 @@ public class OperatorManagementSystem {
     // Retrieve full name of input location
     Location locationFullName = Location.fromString(location);
     String locationString = locationFullName.getFullName();
+    // Retrieve acronym of input location
+    String locationAcronym = locationFullName.getLocationAbbreviation();
 
     // Create acronym of operator
     String[] words = operatorName.split(" ");
-    String locationAcronymn = "";
+    String operatorAcronymn = "";
     for (String word : words) {
-      locationAcronymn += word.charAt(0);
+      operatorAcronymn += word.charAt(0);
     }
-
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationAcronymn, locationString);
+    String locationID = String.join("-", operatorAcronymn, locationAcronym, "001");
+    MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationID, locationString);
   }
 
   public void viewActivities(String operatorId) {
