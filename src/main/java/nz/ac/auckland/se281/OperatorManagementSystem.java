@@ -24,7 +24,11 @@ public class OperatorManagementSystem {
     for (String word : words) {
       operatorAcronymn += word.charAt(0);
     }
-    String locationID = String.join("-", operatorAcronymn, locationAcronym, "001");
+    // Create the three digit number
+    int number = 1;
+    String threeDigits = String.format("%03d", number);
+
+    String locationID = String.join("-", operatorAcronymn, locationAcronym, threeDigits);
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationID, locationString);
   }
 
