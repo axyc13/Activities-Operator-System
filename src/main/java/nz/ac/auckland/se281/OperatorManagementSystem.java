@@ -4,11 +4,14 @@ import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
 
+  private Database entryData = new Database();
+
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
     MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+    entryData.printDatabase();
   }
 
   public void createOperator(String operatorName, String location) {
@@ -30,6 +33,11 @@ public class OperatorManagementSystem {
 
     String locationID = String.join("-", operatorAcronymn, locationAcronym, threeDigits);
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationID, locationString);
+
+    String operatorFound =
+        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationID, locationString);
+    entryData.storeData(operatorFound);
+    // entryData.printDatabase();
   }
 
   public void viewActivities(String operatorId) {
