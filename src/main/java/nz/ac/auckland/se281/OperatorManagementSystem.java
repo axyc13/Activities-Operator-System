@@ -10,7 +10,7 @@ public class OperatorManagementSystem {
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
-    MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+    entryData.countData();
     entryData.printDatabase();
   }
 
