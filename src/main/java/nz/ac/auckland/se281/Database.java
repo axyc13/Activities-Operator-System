@@ -40,8 +40,8 @@ public class Database {
       MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
     } else if (count == 1) {
       MessageCli.OPERATORS_FOUND.printMessage("is", "1", "", ":");
-    } else if (count == 2) {
-      MessageCli.OPERATORS_FOUND.printMessage("are", "2", "s", ":");
+    } else if (count >= 2) {
+      MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(count), "s", ":");
     }
   }
 }
