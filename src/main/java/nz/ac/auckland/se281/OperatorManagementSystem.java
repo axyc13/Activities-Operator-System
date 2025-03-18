@@ -1,7 +1,5 @@
 package nz.ac.auckland.se281;
 
-import nz.ac.auckland.se281.Types.Location;
-
 public class OperatorManagementSystem {
 
   private Database entryData = new Database();
@@ -15,26 +13,21 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
+    Operator operator = new Operator();
+
     // Retrieve full name of input location
-    Location locationFullName = Location.fromString(location);
-    String locationString = locationFullName.getFullName();
-    // Retrieve acronym of input location
-    String locationAcronym = locationFullName.getLocationAbbreviation();
-    // Create acronym of operator
-    String[] words = operatorName.split(" ");
-    String operatorAcronymn = "";
-    for (String word : words) {
-      operatorAcronymn += word.charAt(0);
-    }
-    // Create the three digit number
-    int number = 1;
-    String threeDigits = String.format("%03d", number);
-    // Create Location ID
-    String locationID = String.join("-", operatorAcronymn, locationAcronym, threeDigits);
+    String locationString = operator.locationString(location);
 
-    MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationID, locationString);
+    // Create locationID
+    operator.locationAcronymn(location);
+    operator.operatorAcronymn(operatorName);
+    operator.threeDigits();
+    String locationID = operator.locationID();
 
-    // Store raw variables
+    // Sending appropriate message WORK IN PROGRESS
+    operator.sendMessage();
+
+    // Storing these variables:
     entryData.storeVariables(operatorName, locationID, locationString);
     // Storing the operator into the database
     String operatorFound =
