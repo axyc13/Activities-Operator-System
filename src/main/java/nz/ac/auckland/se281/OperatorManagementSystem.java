@@ -3,6 +3,9 @@ package nz.ac.auckland.se281;
 public class OperatorManagementSystem {
 
   private Database entryData = new Database();
+  private Operator operator = new Operator();
+
+  // private Operator test = new Operator();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -13,8 +16,6 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
-    Operator operator = new Operator();
-
     // Retrieve full name of input location
     String locationString = operator.locationString(location);
 

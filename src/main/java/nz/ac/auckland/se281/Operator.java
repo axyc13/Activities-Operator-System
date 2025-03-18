@@ -1,15 +1,18 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Types.Location;
 
 public class Operator {
   private String locationString;
   private String operatorName;
 
-  private String locationAcronym;
+  private String locationAcronymn;
   private String operatorAcronymn = "";
   private String threeDigits;
   private String locationID;
+  private ArrayList<String> list = new ArrayList<>();
+  private int number = 1;
 
   public Operator() {}
 
@@ -21,7 +24,14 @@ public class Operator {
 
   public void locationAcronymn(String location) {
     Location locationFullName = Location.fromString(location);
-    this.locationAcronym = locationFullName.getLocationAbbreviation();
+    this.locationAcronymn = locationFullName.getLocationAbbreviation();
+
+    // if (list.contains(this.locationAcronymn)) {
+    //   number++;
+
+    // } else {
+    //   list.add(this.locationAcronymn);
+    // }
   }
 
   public void operatorAcronymn(String operatorName) {
@@ -33,14 +43,13 @@ public class Operator {
   }
 
   public void threeDigits() {
-    // WORK IN PROGRESS
-    int number = 1;
-    this.threeDigits = String.format("%03d", number);
+    this.threeDigits = String.format("%03d", this.number);
   }
 
   public String locationID() {
     this.locationID =
-        String.join("-", this.operatorAcronymn, this.locationAcronym, this.threeDigits);
+        String.join("-", this.operatorAcronymn, this.locationAcronymn, this.threeDigits);
+    this.operatorAcronymn = "";
     return this.locationID;
   }
 
