@@ -5,14 +5,25 @@ import java.util.ArrayList;
 public class Database {
   private ArrayList<String> list = new ArrayList<>();
   private int count = 0;
-
-  // private String Test = "hi";
+  private String operatorName;
+  private String locationID;
+  private String locationString;
 
   public Database() {}
 
+  public void storeVariables(String operatorName, String locationID, String locationString) {
+    this.operatorName = operatorName;
+    this.locationID = locationID;
+    this.locationString = locationString;
+  }
+
   public void storeData(String data) {
-    list.add(data);
-    // Test = data;
+    if (list.contains(data)) {
+      MessageCli.OPERATOR_NOT_CREATED_ALREADY_EXISTS_SAME_LOCATION.printMessage(
+          operatorName, locationString);
+    } else {
+      list.add(data);
+    }
   }
 
   public void printDatabase() {

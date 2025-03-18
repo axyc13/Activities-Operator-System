@@ -20,7 +20,6 @@ public class OperatorManagementSystem {
     String locationString = locationFullName.getFullName();
     // Retrieve acronym of input location
     String locationAcronym = locationFullName.getLocationAbbreviation();
-
     // Create acronym of operator
     String[] words = operatorName.split(" ");
     String operatorAcronymn = "";
@@ -30,14 +29,17 @@ public class OperatorManagementSystem {
     // Create the three digit number
     int number = 1;
     String threeDigits = String.format("%03d", number);
-
+    // Create Location ID
     String locationID = String.join("-", operatorAcronymn, locationAcronym, threeDigits);
+
     MessageCli.OPERATOR_CREATED.printMessage(operatorName, locationID, locationString);
 
+    // Store raw variables
+    entryData.storeVariables(operatorName, locationID, locationString);
+    // Storing the operator into the database
     String operatorFound =
         MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationID, locationString);
     entryData.storeData(operatorFound);
-    // entryData.printDatabase();
   }
 
   public void viewActivities(String operatorId) {
