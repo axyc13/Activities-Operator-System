@@ -20,7 +20,8 @@ public class OperatorManagementSystem {
       entryData.countData(keyword);
       entryData.printDatabase(keyword);
     } else if (locationFull != null) {
-      System.out.println("hiiiiiiii");
+      entryData.countData(keyword);
+      entryData.printDatabase(keyword);
     } else {
       for (Location location : Location.values()) {
         if (location.getNameEnglish().contains(keyword)) {
