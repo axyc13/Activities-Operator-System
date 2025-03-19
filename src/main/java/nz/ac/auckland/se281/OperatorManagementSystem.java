@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import nz.ac.auckland.se281.Types.Location;
+
 public class OperatorManagementSystem {
 
   private Database entryData = new Database();
@@ -11,8 +13,27 @@ public class OperatorManagementSystem {
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
-    entryData.countData();
-    entryData.printDatabase();
+
+    Location locationFull = Location.fromString(keyword);
+
+    if (keyword.equals("*")) {
+      entryData.countData(keyword);
+      entryData.printDatabase(keyword);
+    } else if (locationFull != null) {
+      System.out.println("hiiiiiiii");
+    } else {
+      for (Location location : Location.values()) {
+        if (location.getNameEnglish().contains(keyword)) {
+          keyword = location.getNameEnglish();
+        } else if (location.getNameTeReo().contains(keyword)) {
+          keyword = location.getNameTeReo();
+        } else if (location.getLocationAbbreviation().contains(keyword)) {
+          keyword = location.getLocationAbbreviation();
+        }
+        entryData.countData(keyword);
+        entryData.printDatabase(keyword);
+      }
+    }
   }
 
   public void createOperator(String operatorName, String location) {

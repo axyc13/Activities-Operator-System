@@ -26,22 +26,46 @@ public class Database {
     }
   }
 
-  public void printDatabase() {
-    for (String place : list) {
-      System.out.println(place);
+  public void printDatabase(String keyword) {
+    if (keyword.equals("*")) {
+      for (String place : list) {
+        System.out.println(place);
+      }
+    } else {
+      for (String place : list) {
+        if (place.contains(keyword)) {
+          System.out.println(place);
+        }
+      }
     }
   }
 
-  public void countData() {
-    for (String place : list) {
-      this.count++;
-    }
-    if (count == 0) {
-      MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
-    } else if (count == 1) {
-      MessageCli.OPERATORS_FOUND.printMessage("is", "1", "", ":");
-    } else if (count >= 2) {
-      MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(count), "s", ":");
+  public void countData(String keyword) {
+    if (keyword.equals("*")) {
+      for (String place : list) {
+        this.count++;
+      }
+      if (count == 0) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+      } else if (count == 1) {
+        MessageCli.OPERATORS_FOUND.printMessage("is", "1", "", ":");
+      } else if (count >= 2) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(count), "s", ":");
+      }
+    } else {
+      for (String place : list) {
+        if (place.contains(keyword)) {
+          this.count++;
+        }
+      }
+      if (count == 0) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+      } else if (count == 1) {
+        MessageCli.OPERATORS_FOUND.printMessage("is", "1", "", ":");
+      } else if (count >= 2) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(count), "s", ":");
+      }
+      count = 0;
     }
   }
 }
