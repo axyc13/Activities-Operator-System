@@ -20,7 +20,7 @@ public class OperatorManagementSystem {
     String locationString = operator.locationString(location);
 
     // Create locationID
-    operator.locationAcronymn(location);
+    operator.locationAcronymn(location, operatorName);
     operator.operatorAcronymn(operatorName);
     operator.threeDigits();
     String locationID = operator.locationID();

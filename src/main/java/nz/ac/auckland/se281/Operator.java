@@ -12,6 +12,7 @@ public class Operator {
   private String threeDigits;
   private String locationID;
   private ArrayList<String> list = new ArrayList<>();
+  private ArrayList<String> list2 = new ArrayList<>();
   private int number = 1;
 
   public Operator() {}
@@ -22,16 +23,20 @@ public class Operator {
     return this.locationString;
   }
 
-  public void locationAcronymn(String location) {
+  public void locationAcronymn(String location, String specificOperator) {
     Location locationFullName = Location.fromString(location);
     this.locationAcronymn = locationFullName.getLocationAbbreviation();
 
-    // if (list.contains(this.locationAcronymn)) {
-    //   number++;
-
-    // } else {
-    //   list.add(this.locationAcronymn);
-    // }
+    if (list.contains(this.locationAcronymn) && !list2.contains(specificOperator)) {
+      for (String places : list) {
+        if (this.locationAcronymn == places) {
+          number++;
+        }
+      }
+    } else {
+      list.add(this.locationAcronymn);
+      list2.add(specificOperator);
+    }
   }
 
   public void operatorAcronymn(String operatorName) {
@@ -44,6 +49,7 @@ public class Operator {
 
   public void threeDigits() {
     this.threeDigits = String.format("%03d", this.number);
+    this.number = 1;
   }
 
   public String locationID() {
