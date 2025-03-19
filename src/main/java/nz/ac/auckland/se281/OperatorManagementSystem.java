@@ -44,11 +44,11 @@ public class OperatorManagementSystem {
 
   public void createOperator(String operatorName, String location) {
     // Retrieve full name of input location
-    String locationString = operator.locationString(location);
+    String locationString = operator.createLocationString(location);
 
     // Create location ID
-    operator.locationAcronym(location, operatorName);
-    operator.operatorAcronym(operatorName);
+    operator.createLocationAcronym(location, operatorName);
+    operator.createOperatorAcronym(operatorName);
     operator.createThreeDigits();
     String locationIdentity = operator.createLocationIdentity();
 

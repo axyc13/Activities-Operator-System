@@ -17,14 +17,14 @@ public class Operator {
 
   public Operator() {}
 
-  public String locationString(String location) {
+  public String createLocationString(String location) {
     // Retrieve full name of input location
     Location locationFullName = Location.fromString(location);
     this.locationString = locationFullName.getFullName();
     return this.locationString;
   }
 
-  public void locationAcronym(String location, String specificOperator) {
+  public void createLocationAcronym(String location, String specificOperator) {
     // Create location acronym
     Location locationFullName = Location.fromString(location);
     this.locationAcronym = locationFullName.getLocationAbbreviation();
@@ -44,7 +44,7 @@ public class Operator {
     }
   }
 
-  public void operatorAcronym(String operatorName) {
+  public void createOperatorAcronym(String operatorName) {
     // Create operator acronym
     this.operatorName = operatorName;
     String[] words = operatorName.split(" ");
