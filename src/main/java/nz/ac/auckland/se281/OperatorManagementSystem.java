@@ -7,22 +7,27 @@ public class OperatorManagementSystem {
   private Database entryData = new Database();
   private Operator operator = new Operator();
 
-  // private Operator test = new Operator();
-
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
 
   public void searchOperators(String keyword) {
-
+    // 3 Cases:
     Location locationFull = Location.fromString(keyword);
 
     if (keyword.equals("*")) {
+      // 1. Searching for all operators
+
       entryData.countData(keyword);
       entryData.printDatabase(keyword);
     } else if (locationFull != null) {
+      // 2. Searching with a location keyword
+
       entryData.countData(keyword);
       entryData.printDatabase(keyword);
     } else {
+      // 3. Searching with a snippet of a location keyword
+
+      // Convert location snippet into full version
       for (Location location : Location.values()) {
         if (location.getNameEnglish().contains(keyword)) {
           keyword = location.getNameEnglish();
@@ -41,20 +46,19 @@ public class OperatorManagementSystem {
     // Retrieve full name of input location
     String locationString = operator.locationString(location);
 
-    // Create locationID
-    operator.locationAcronymn(location, operatorName);
-    operator.operatorAcronymn(operatorName);
-    operator.threeDigits();
-    String locationID = operator.locationID();
+    // Create location ID
+    operator.locationAcronym(location, operatorName);
+    operator.operatorAcronym(operatorName);
+    operator.createThreeDigits();
+    String locationIdentity = operator.createLocationIdentity();
 
-    // Sending appropriate message WORK IN PROGRESS
+    // Sending appropriate message
     operator.sendMessage();
 
-    // Storing these variables:
-    entryData.storeVariables(operatorName, locationID, locationString);
-    // Storing the operator into the database
+    // Storing variables
+    entryData.storeVariables(operatorName, locationIdentity, locationString);
     String operatorFound =
-        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationID, locationString);
+        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationIdentity, locationString);
     entryData.storeData(operatorFound);
   }
 

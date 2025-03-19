@@ -7,10 +7,10 @@ public class Operator {
   private String locationString;
   private String operatorName;
 
-  private String locationAcronymn;
-  private String operatorAcronymn = "";
+  private String locationAcronym;
+  private String operatorAcronym = "";
   private String threeDigits;
-  private String locationID;
+  private String locationIdentity;
   private ArrayList<String> list = new ArrayList<>();
   private ArrayList<String> list2 = new ArrayList<>();
   private int number = 1;
@@ -18,49 +18,56 @@ public class Operator {
   public Operator() {}
 
   public String locationString(String location) {
+    // Retrieve full name of input location
     Location locationFullName = Location.fromString(location);
     this.locationString = locationFullName.getFullName();
     return this.locationString;
   }
 
-  public void locationAcronymn(String location, String specificOperator) {
+  public void locationAcronym(String location, String specificOperator) {
+    // Create location acronym
     Location locationFullName = Location.fromString(location);
-    this.locationAcronymn = locationFullName.getLocationAbbreviation();
+    this.locationAcronym = locationFullName.getLocationAbbreviation();
 
-    if (list.contains(this.locationAcronymn) && !list2.contains(specificOperator)) {
+    // Check if location already exists and increment accordingly
+    if (list.contains(this.locationAcronym) && !list2.contains(specificOperator)) {
       for (String places : list) {
-        if (this.locationAcronymn == places) {
+        if (this.locationAcronym == places) {
           number++;
         }
       }
     } else {
-      list.add(this.locationAcronymn);
+      // List of location acronyms to be printed
+      list.add(this.locationAcronym);
+      // List of location acronyms to check if operator already exists
       list2.add(specificOperator);
     }
   }
 
-  public void operatorAcronymn(String operatorName) {
+  public void operatorAcronym(String operatorName) {
+    // Create operator acronym
     this.operatorName = operatorName;
     String[] words = operatorName.split(" ");
     for (String word : words) {
-      this.operatorAcronymn += word.charAt(0);
+      this.operatorAcronym += word.charAt(0);
     }
   }
 
-  public void threeDigits() {
+  public void createThreeDigits() {
     this.threeDigits = String.format("%03d", this.number);
     this.number = 1;
   }
 
-  public String locationID() {
-    this.locationID =
-        String.join("-", this.operatorAcronymn, this.locationAcronymn, this.threeDigits);
-    this.operatorAcronymn = "";
-    return this.locationID;
+  public String createLocationIdentity() {
+    // Create location identity
+    this.locationIdentity =
+        String.join("-", this.operatorAcronym, this.locationAcronym, this.threeDigits);
+    this.operatorAcronym = "";
+    return this.locationIdentity;
   }
 
   public void sendMessage() {
     MessageCli.OPERATOR_CREATED.printMessage(
-        this.operatorName, this.locationID, this.locationString);
+        this.operatorName, this.locationIdentity, this.locationString);
   }
 }
