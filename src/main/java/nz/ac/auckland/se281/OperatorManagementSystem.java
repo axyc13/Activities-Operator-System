@@ -21,7 +21,7 @@ public class OperatorManagementSystem {
       entryData.printDatabase(keyword);
     } else if (locationFull != null) {
       // 2. Searching with a location keyword
-
+      keyword = locationFull.getFullName();
       entryData.countData(keyword);
       entryData.printDatabase(keyword);
     } else {
@@ -29,11 +29,11 @@ public class OperatorManagementSystem {
 
       // Convert location snippet into full version
       for (Location location : Location.values()) {
-        if (location.getNameEnglish().contains(keyword)) {
+        if (location.getNameEnglish().contains(keyword.toLowerCase())) {
           keyword = location.getNameEnglish();
-        } else if (location.getNameTeReo().contains(keyword)) {
+        } else if (location.getNameTeReo().contains(keyword.toLowerCase())) {
           keyword = location.getNameTeReo();
-        } else if (location.getLocationAbbreviation().contains(keyword)) {
+        } else if (location.getLocationAbbreviation().contains(keyword.toLowerCase())) {
           keyword = location.getLocationAbbreviation();
         }
         entryData.countData(keyword);
@@ -56,10 +56,12 @@ public class OperatorManagementSystem {
     operator.sendMessage();
 
     // Storing variables
-    entryData.storeVariables(operatorName, locationIdentity, locationString);
-    String operatorFound =
-        MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationIdentity, locationString);
-    entryData.storeData(operatorFound);
+    if (locationString != null) {
+      entryData.storeVariables(operatorName, locationIdentity, locationString);
+      String operatorFound =
+          MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationIdentity, locationString);
+      entryData.storeData(operatorFound);
+    }
   }
 
   public void viewActivities(String operatorId) {

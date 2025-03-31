@@ -55,6 +55,7 @@ public class Database {
       } else if (count >= 2) {
         MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(count), "s", ":");
       }
+      count = 0;
     } else { // Counts the amount of specified data and prints accordingly
       for (String place : list) {
         if (place.contains(keyword)) {

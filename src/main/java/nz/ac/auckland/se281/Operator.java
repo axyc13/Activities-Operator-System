@@ -20,14 +20,21 @@ public class Operator {
   public String createLocationString(String location) {
     // Retrieve full name of input location
     Location locationFullName = Location.fromString(location);
-    this.locationString = locationFullName.getFullName();
-    return this.locationString;
+    if (locationFullName == null) {
+      MessageCli.OPERATOR_NOT_CREATED_INVALID_LOCATION.printMessage(location);
+      return null;
+    } else {
+      this.locationString = locationFullName.getFullName();
+      return this.locationString;
+    }
   }
 
   public void createLocationAcronym(String location, String specificOperator) {
     // Create location acronym
     Location locationFullName = Location.fromString(location);
-    this.locationAcronym = locationFullName.getLocationAbbreviation();
+    if (locationFullName != null) {
+      this.locationAcronym = locationFullName.getLocationAbbreviation();
+    }
 
     // Check if location already exists and increment accordingly
     if (list.contains(this.locationAcronym) && !list2.contains(specificOperator)) {
@@ -67,7 +74,9 @@ public class Operator {
   }
 
   public void sendMessage() {
-    MessageCli.OPERATOR_CREATED.printMessage(
-        this.operatorName, this.locationIdentity, this.locationString);
+    if (this.locationString != null) {
+      MessageCli.OPERATOR_CREATED.printMessage(
+          this.operatorName, this.locationIdentity, this.locationString);
+    }
   }
 }
