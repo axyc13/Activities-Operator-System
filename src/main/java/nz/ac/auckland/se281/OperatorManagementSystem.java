@@ -43,6 +43,12 @@ public class OperatorManagementSystem {
   }
 
   public void createOperator(String operatorName, String location) {
+    // Checks if operator is less than 3 characters
+    if (operatorName.length() < 3) {
+      MessageCli.OPERATOR_NOT_CREATED_INVALID_OPERATOR_NAME.printMessage(operatorName);
+      return;
+    }
+
     // Retrieve full name of input location
     String locationString = operator.createLocationString(location);
 
