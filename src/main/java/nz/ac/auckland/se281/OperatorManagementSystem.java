@@ -17,13 +17,13 @@ public class OperatorManagementSystem {
     if (keyword.equals("*")) {
       // 1. Searching for all operators
 
-      entryData.countData(keyword);
-      entryData.printDatabase(keyword);
+      entryData.countData(keyword, null);
+      entryData.printDatabase(keyword, null);
     } else if (locationFull != null) {
       // 2. Searching with a location keyword
-      keyword = locationFull.getFullName();
-      entryData.countData(keyword);
-      entryData.printDatabase(keyword);
+      String test = locationFull.getFullName();
+      entryData.countData(test, keyword);
+      entryData.printDatabase(test, keyword);
     } else {
       // 3. Searching with a snippet of a location keyword
 
@@ -36,8 +36,8 @@ public class OperatorManagementSystem {
         } else if (location.getLocationAbbreviation().contains(keyword.toLowerCase())) {
           keyword = location.getLocationAbbreviation();
         }
-        entryData.countData(keyword);
-        entryData.printDatabase(keyword);
+        entryData.countData(keyword, null);
+        entryData.printDatabase(keyword, null);
       }
     }
   }

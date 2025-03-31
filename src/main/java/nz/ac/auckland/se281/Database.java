@@ -27,11 +27,17 @@ public class Database {
     }
   }
 
-  public void printDatabase(String keyword) {
+  public void printDatabase(String keyword, String caseTwo) {
     // Prints specific/all data
     if (keyword.equals("*")) {
       for (String place : list) {
         System.out.println(place);
+      }
+    } else if (caseTwo != null) { // Special case where operator name contains location name
+      for (String place : list) {
+        if (place.contains(keyword) || place.toLowerCase().contains(caseTwo.toLowerCase())) {
+          System.out.println(place);
+        }
       }
     } else {
       for (String place : list) {
@@ -42,11 +48,25 @@ public class Database {
     }
   }
 
-  public void countData(String keyword) {
+  public void countData(String keyword, String caseTwo) {
     // Counts the total amount of data and prints accordingly
-    if (keyword.equals("*")) {
+    if (keyword.equals("*") && caseTwo == "hi") {
       for (String place : list) {
         this.count++;
+      }
+      if (count == 0) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
+      } else if (count == 1) {
+        MessageCli.OPERATORS_FOUND.printMessage("is", "1", "", ":");
+      } else if (count >= 2) {
+        MessageCli.OPERATORS_FOUND.printMessage("are", Integer.toString(count), "s", ":");
+      }
+      count = 0;
+    } else if (caseTwo != null) { // Special case where where operator name contains location name
+      for (String place : list) {
+        if (place.contains(keyword) || place.toLowerCase().contains(caseTwo.toLowerCase())) {
+          this.count++;
+        }
       }
       if (count == 0) {
         MessageCli.OPERATORS_FOUND.printMessage("are", "no", "s", ".");
