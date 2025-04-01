@@ -19,6 +19,7 @@ public class Operator {
 
   public String createLocationString(String location) {
     // Retrieve full name of input location
+
     Location locationFullName = Location.fromString(location);
     if (locationFullName == null) {
       MessageCli.OPERATOR_NOT_CREATED_INVALID_LOCATION.printMessage(location);
@@ -43,6 +44,7 @@ public class Operator {
           number++;
         }
       }
+      list.add(this.locationAcronym);
     } else {
       // List of location acronyms to be printed
       list.add(this.locationAcronym);

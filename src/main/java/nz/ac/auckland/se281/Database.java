@@ -50,7 +50,7 @@ public class Database {
 
   public void countData(String keyword, String caseTwo) {
     // Counts the total amount of data and prints accordingly
-    if (keyword.equals("*") && caseTwo == "hi") {
+    if (keyword.equals("*") && caseTwo == null) {
       for (String place : list) {
         this.count++;
       }

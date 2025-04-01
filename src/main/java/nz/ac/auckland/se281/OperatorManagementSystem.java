@@ -15,17 +15,22 @@ public class OperatorManagementSystem {
     Location locationFull = Location.fromString(keyword);
 
     if (keyword.equals("*")) {
-      // 1. Searching for all operators
+      // Case 1: Searching for all operators
 
       entryData.countData(keyword, null);
       entryData.printDatabase(keyword, null);
+
     } else if (locationFull != null) {
-      // 2. Searching with a location keyword
-      String test = locationFull.getFullName();
-      entryData.countData(test, keyword);
-      entryData.printDatabase(test, keyword);
+      // Case 2: Searching with the full location/operator keyword
+
+      String locationName = locationFull.getFullName();
+      entryData.countData(locationName, keyword);
+      entryData.printDatabase(locationName, keyword);
+
     } else {
-      // 3. Searching with a snippet of a location keyword
+      // Case 3: Searching with a snippet of a location/operator keyword
+
+      keyword = keyword.replaceAll("\\s", "");
 
       // Convert location snippet into full version
       for (Location location : Location.values()) {
@@ -35,15 +40,17 @@ public class OperatorManagementSystem {
           keyword = location.getNameTeReo();
         } else if (location.getLocationAbbreviation().contains(keyword.toLowerCase())) {
           keyword = location.getLocationAbbreviation();
+        } else {
         }
-        entryData.countData(keyword, null);
-        entryData.printDatabase(keyword, null);
+        entryData.countData(keyword, keyword);
+        entryData.printDatabase(keyword, keyword);
       }
     }
   }
 
   public void createOperator(String operatorName, String location) {
     // Checks if operator is less than 3 characters
+
     if (operatorName.length() < 3) {
       MessageCli.OPERATOR_NOT_CREATED_INVALID_OPERATOR_NAME.printMessage(operatorName);
       return;
