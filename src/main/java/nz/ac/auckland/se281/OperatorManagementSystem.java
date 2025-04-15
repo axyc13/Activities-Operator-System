@@ -82,7 +82,16 @@ public class OperatorManagementSystem {
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
-    // TODO implement
+    // Checks if operator is in database:
+    if (entryData.checkOperatorId(operatorId) == false) {
+      MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
+      return;
+    }
+    // Checks if activity name is less than 3 characters:
+    if (activityName.length() < 3) {
+      MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
+      return;
+    }
   }
 
   public void searchActivities(String keyword) {

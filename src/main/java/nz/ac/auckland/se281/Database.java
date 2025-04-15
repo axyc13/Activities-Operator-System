@@ -17,6 +17,10 @@ public class Database {
     this.locationString = locationString;
   }
 
+  public boolean checkOperatorId(String operatorId) {
+    return list.contains(operatorId);
+  }
+
   public void storeData(String data) {
     // Stores data
     if (list.contains(data)) {
