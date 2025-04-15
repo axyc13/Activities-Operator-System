@@ -46,9 +46,9 @@ public class OperatorManagementSystem {
           keyword = location.getLocationAbbreviation();
         } else {
         }
-        entryData.countData(keyword, keyword);
-        entryData.printDatabase(keyword, keyword);
       }
+      entryData.countData(keyword, keyword);
+      entryData.printDatabase(keyword, keyword);
     }
   }
 
@@ -121,7 +121,31 @@ public class OperatorManagementSystem {
   }
 
   public void searchActivities(String keyword) {
-    // TODO implement
+
+    // 3 Cases:
+    Location locationFull = Location.fromString(keyword);
+
+    if (keyword.equals("*")) {
+      // Case 1: Searching for all activities
+
+      activity.countData(keyword, null);
+      activity.printDatabase(keyword, null);
+
+    } else if (locationFull != null) {
+
+      // Case 2: Searching with the location of activity
+
+      String locationName = locationFull.getFullName();
+
+      activity.countData(locationName, keyword);
+      activity.printDatabase(locationName, keyword);
+
+    } else {
+      // Case 3: Searching with a snippet from the activity
+      keyword = keyword.replaceAll("\\s", "");
+      activity.countData(keyword, null);
+      activity.printDatabase(keyword, null);
+    }
   }
 
   public void addPublicReview(String activityId, String[] options) {

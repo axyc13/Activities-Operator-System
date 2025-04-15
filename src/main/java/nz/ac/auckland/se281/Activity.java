@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import nz.ac.auckland.se281.Types.Location;
 
 public class Activity {
 
@@ -79,5 +80,112 @@ public class Activity {
     this.threeDigits = String.format("%03d", this.number);
     this.number = 1;
     return this.threeDigits;
+  }
+
+  public void printDatabase(String keyword, String caseTwo) {
+
+    // Prints specific/all data
+    if (keyword.equals("*")) {
+      for (String activity : activities) {
+        System.out.println(activity);
+      }
+    } else if (caseTwo != null) { // Case where we are searching with location name
+
+      for (String activity : activities) {
+        // Extracting the location from the operator ID
+        int start = activity.indexOf('[') + 1;
+        int end = activity.indexOf('/');
+        String code = activity.substring(start, end);
+
+        String[] parts = code.split("-");
+        String locationCode = parts[1];
+        String locationName = Location.fromString(locationCode).getFullName();
+
+        if (locationName.contains(keyword)
+            || locationName.toLowerCase().contains(caseTwo.toLowerCase())) {
+          System.out.println(activity);
+        }
+      }
+    } else { // Case where we are searching with activity snippet OR location name has a space
+      for (String activity : activities) {
+        int start = activity.indexOf('[') + 1;
+        int end = activity.indexOf('/');
+        String code = activity.substring(start, end);
+
+        String[] parts = code.split("-");
+        String locationCode = parts[1];
+        String locationName = Location.fromString(locationCode).getFullName();
+
+        if (activity.toLowerCase().contains(keyword.toLowerCase())
+            || locationName.contains(keyword)) {
+          System.out.println(activity);
+        }
+      }
+    }
+  }
+
+  public void countData(String keyword, String caseTwo) {
+    // Counts the total amount of data and prints accordingly
+    if (keyword.equals("*") && caseTwo == null) {
+      for (String place : activities) {
+        this.count++;
+      }
+      if (count == 0) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      } else if (count == 1) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("is", "1", "y", ":");
+      } else if (count >= 2) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("are", Integer.toString(count), "ies", ":");
+      }
+      count = 0;
+    } else if (caseTwo != null) { // Case where we are searching with location name
+      for (String activity : activities) {
+        // Extracting the location from the operator ID
+        int start = activity.indexOf('[') + 1;
+        int end = activity.indexOf('/');
+        String code = activity.substring(start, end);
+
+        String[] parts = code.split("-");
+        String locationCode = parts[1];
+        String locationName = Location.fromString(locationCode).getFullName();
+
+        if (locationName.contains(keyword)
+            || locationName.toLowerCase().contains(caseTwo.toLowerCase())) {
+          this.count++;
+        }
+      }
+      if (count == 0) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      } else if (count == 1) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("is", "1", "y", ":");
+      } else if (count >= 2) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("are", Integer.toString(count), "ies", ":");
+      }
+      count = 0;
+    } else { // Case where we are searching with activity snippet OR location name has a space
+
+      for (String activity : activities) {
+        int start = activity.indexOf('[') + 1;
+        int end = activity.indexOf('/');
+        String code = activity.substring(start, end);
+
+        String[] parts = code.split("-");
+        String locationCode = parts[1];
+        String locationName = Location.fromString(locationCode).getFullName();
+
+        if (activity.toLowerCase().contains(keyword.toLowerCase())
+            || locationName.contains(keyword)) {
+          this.count++;
+        }
+      }
+      if (count == 0) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
+      } else if (count == 1) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("is", "1", "y", ":");
+      } else if (count >= 2) {
+        MessageCli.ACTIVITIES_FOUND.printMessage("are", Integer.toString(count), "ies", ":");
+      }
+      count = 0;
+    }
   }
 }

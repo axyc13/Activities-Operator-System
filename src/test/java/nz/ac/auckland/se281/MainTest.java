@@ -472,7 +472,7 @@ public class MainTest {
     @Test
     public void T2_14_search_activities_found_keyword_location_te_reo() throws Exception {
       runCommands(
-          unpack(CREATE_14_OPERATORS, CREATE_27_ACTIVITIES, SEARCH_ACTIVITIES, "Whakatu", EXIT));
+          unpack(CREATE_14_OPERATORS, CREATE_27_ACTIVITIES, SEARCH_ACTIVITIES, "'Wha katu'", EXIT));
 
       assertContains("There are 2 matching activities found:");
       assertContains(
@@ -486,7 +486,7 @@ public class MainTest {
     @Test
     public void T2_15_search_activities_found_keyword_partial_various() throws Exception {
       runCommands(
-          unpack(CREATE_14_OPERATORS, CREATE_27_ACTIVITIES, SEARCH_ACTIVITIES, "the", EXIT));
+          unpack(CREATE_14_OPERATORS, CREATE_27_ACTIVITIES, SEARCH_ACTIVITIES, "'the'", EXIT));
 
       assertContains("There are 5 matching activities found:");
       assertContains(
