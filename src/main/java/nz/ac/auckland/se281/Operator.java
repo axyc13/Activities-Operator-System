@@ -40,7 +40,7 @@ public class Operator {
     // Check if location already exists and increment accordingly
     if (list.contains(this.locationAcronym) && !list2.contains(specificOperator)) {
       for (String places : list) {
-        if (this.locationAcronym == places) {
+        if (this.locationAcronym.equals(places)) {
           number++;
         }
       }

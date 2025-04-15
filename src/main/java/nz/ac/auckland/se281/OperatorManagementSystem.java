@@ -87,6 +87,7 @@ public class OperatorManagementSystem {
       MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
       return;
     }
+    activity.checkIfActivityIsAtLocation(operatorId);
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
