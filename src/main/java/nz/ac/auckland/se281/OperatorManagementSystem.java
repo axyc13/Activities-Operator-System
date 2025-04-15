@@ -1,11 +1,15 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+import nz.ac.auckland.se281.Types.ActivityType;
 import nz.ac.auckland.se281.Types.Location;
 
 public class OperatorManagementSystem {
 
   private Database entryData = new Database();
   private Operator operator = new Operator();
+  private Activity activity = new Activity();
+  private ArrayList<String> operatorNames = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -75,10 +79,14 @@ public class OperatorManagementSystem {
           MessageCli.OPERATOR_ENTRY.getMessage(operatorName, locationIdentity, locationString);
       entryData.storeData(operatorFound);
     }
+    operatorNames.add(operatorName);
   }
 
   public void viewActivities(String operatorId) {
-    // TODO implement
+    if (entryData.checkOperatorId(operatorId) == false) {
+      MessageCli.OPERATOR_NOT_FOUND.printMessage(operatorId);
+      return;
+    }
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
@@ -91,6 +99,23 @@ public class OperatorManagementSystem {
     if (activityName.length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
       return;
+    }
+    // Checks if activity is valid:
+    if (ActivityType.fromString(activityType) == ActivityType.OTHER) {
+      MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityType);
+      return;
+    }
+
+    for (String operators : operatorNames) {
+      String operatorInQuestion = "";
+      String[] words = operators.split(" ");
+      for (String word : words) {
+        operatorInQuestion += word.charAt(0);
+      }
+      if (operatorId.contains(operatorInQuestion)) {
+        activity.printActivity(activityName, activityType, operatorId, operators);
+        return;
+      }
     }
   }
 

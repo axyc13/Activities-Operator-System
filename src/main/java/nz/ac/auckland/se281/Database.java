@@ -3,7 +3,8 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 
 public class Database {
-  private ArrayList<String> list = new ArrayList<>();
+  protected ArrayList<String> list = new ArrayList<>();
+
   private int count = 0;
   private String operatorName;
   private String locationIdentity;
@@ -18,7 +19,12 @@ public class Database {
   }
 
   public boolean checkOperatorId(String operatorId) {
-    return list.contains(operatorId);
+    for (String data : list) {
+      if (data.contains(operatorId)) {
+        return true; // Operator ID found
+      }
+    }
+    return false;
   }
 
   public void storeData(String data) {
