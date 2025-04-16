@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
   MainTest.Task1.class,
   MainTest.Task2.class,
-  // MainTest.Task3.class,
+  MainTest.Task3.class,
   // MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
@@ -472,7 +472,7 @@ public class MainTest {
     @Test
     public void T2_14_search_activities_found_keyword_location_te_reo() throws Exception {
       runCommands(
-          unpack(CREATE_14_OPERATORS, CREATE_27_ACTIVITIES, SEARCH_ACTIVITIES, "'Wha katu'", EXIT));
+          unpack(CREATE_14_OPERATORS, CREATE_27_ACTIVITIES, SEARCH_ACTIVITIES, "'Whakatu'", EXIT));
 
       assertContains("There are 2 matching activities found:");
       assertContains(

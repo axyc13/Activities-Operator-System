@@ -116,7 +116,10 @@ public class Activity {
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
 
-        if (activity.toLowerCase().contains(keyword.toLowerCase())
+        if (activity
+                .toLowerCase()
+                .substring(0, activity.indexOf("offered by "))
+                .contains(keyword.toLowerCase())
             || locationName.contains(keyword)) {
           System.out.println(activity);
         }
@@ -139,6 +142,7 @@ public class Activity {
       }
       count = 0;
     } else if (caseTwo != null) { // Case where we are searching with location name
+      System.out.println("CASE TWO");
       for (String activity : activities) {
         // Extracting the location from the operator ID
         int start = activity.indexOf('[') + 1;
@@ -163,7 +167,7 @@ public class Activity {
       }
       count = 0;
     } else { // Case where we are searching with activity snippet OR location name has a space
-
+      System.out.println("CASE THREE");
       for (String activity : activities) {
         int start = activity.indexOf('[') + 1;
         int end = activity.indexOf('/');
@@ -172,8 +176,12 @@ public class Activity {
         String[] parts = code.split("-");
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
+        // System.out.println(locationName);
 
-        if (activity.toLowerCase().contains(keyword.toLowerCase())
+        if (activity
+                .toLowerCase()
+                .substring(0, activity.indexOf("offered by "))
+                .contains(keyword.toLowerCase())
             || locationName.contains(keyword)) {
           this.count++;
         }

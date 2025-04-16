@@ -25,6 +25,7 @@ public class OperatorManagementSystem {
       entryData.printDatabase(keyword, null);
 
     } else if (locationFull != null) {
+      System.out.println("CASE TWO OUTSIDE");
       // Case 2: Searching with the full location/operator keyword
 
       String locationName = locationFull.getFullName();
@@ -33,7 +34,7 @@ public class OperatorManagementSystem {
 
     } else {
       // Case 3: Searching with a snippet of a location/operator keyword
-
+      System.out.println("CASE THREE OUTSIDE");
       keyword = keyword.replaceAll("\\s", "");
 
       // Convert location snippet into full version
@@ -46,9 +47,9 @@ public class OperatorManagementSystem {
           keyword = location.getLocationAbbreviation();
         } else {
         }
+        entryData.countData(keyword, keyword);
+        entryData.printDatabase(keyword, keyword);
       }
-      entryData.countData(keyword, keyword);
-      entryData.printDatabase(keyword, keyword);
     }
   }
 
@@ -91,20 +92,26 @@ public class OperatorManagementSystem {
   }
 
   public void createActivity(String activityName, String activityType, String operatorId) {
-    // Checks if operator is in database:
+    // Initialising variables
+    operatorId = operatorId.trim();
+    activityName = activityName.trim();
+    activityType = activityType.trim().toLowerCase();
+    activityType = activityType.substring(0, 1).toUpperCase() + activityType.substring(1);
+
+    // Checks if operator is in database
     if (entryData.checkOperatorId(operatorId) == false) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_OPERATOR_ID.printMessage(operatorId);
       return;
     }
-    // Checks if activity name is less than 3 characters:
+    // Checks if activity name is less than 3 characters
     if (activityName.length() < 3) {
       MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityName);
       return;
     }
-    // Checks if activity is valid:
+
+    // Checks if activity is an 'other':
     if (ActivityType.fromString(activityType) == ActivityType.OTHER) {
-      MessageCli.ACTIVITY_NOT_CREATED_INVALID_ACTIVITY_NAME.printMessage(activityType);
-      return;
+      activityType = ActivityType.OTHER.getName();
     }
 
     for (String operators : operatorNames) {
@@ -122,6 +129,8 @@ public class OperatorManagementSystem {
 
   public void searchActivities(String keyword) {
 
+    keyword = keyword.trim();
+
     // 3 Cases:
     Location locationFull = Location.fromString(keyword);
 
@@ -132,7 +141,7 @@ public class OperatorManagementSystem {
       activity.printDatabase(keyword, null);
 
     } else if (locationFull != null) {
-
+      System.out.println("CASE TWO OUTSIDE");
       // Case 2: Searching with the location of activity
 
       String locationName = locationFull.getFullName();
@@ -142,7 +151,7 @@ public class OperatorManagementSystem {
 
     } else {
       // Case 3: Searching with a snippet from the activity
-      keyword = keyword.replaceAll("\\s", "");
+      System.out.println("CASE THREE OUTSIDE");
       activity.countData(keyword, null);
       activity.printDatabase(keyword, null);
     }
