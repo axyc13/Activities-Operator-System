@@ -9,7 +9,9 @@ public class OperatorManagementSystem {
   private Database entryData = new Database();
   private Operator operator = new Operator();
   private Activity activity = new Activity();
+  private ReviewSystem reviewSystem = new ReviewSystem();
   private ArrayList<String> operatorNames = new ArrayList<>();
+  protected ArrayList<String> activityNames = new ArrayList<>();
 
   // Do not change the parameters of the constructor
   public OperatorManagementSystem() {}
@@ -121,7 +123,10 @@ public class OperatorManagementSystem {
         operatorInQuestion += word.charAt(0);
       }
       if (operatorId.contains(operatorInQuestion)) {
-        activity.printActivity(activityName, activityType, operatorId, operators);
+        String activtyId =
+            activity.printActivity(activityName, activityType, operatorId, operators);
+        MessageCli.ACTIVITY_CREATED.printMessage(activityName, activtyId, activityType, operators);
+        activityNames.add(activtyId + " and " + activityName);
         return;
       }
     }
@@ -170,7 +175,16 @@ public class OperatorManagementSystem {
   }
 
   public void displayReviews(String activityId) {
-    // TODO implement
+    if (activity.checkActivityId(activityId) == false) {
+      MessageCli.ACTIVITY_NOT_FOUND.printMessage(activityId);
+      return;
+    }
+    for (String activity : activityNames) {
+      if (activity.contains(activityId)) {
+        activityId = activity.substring(activity.indexOf("and ") + 2);
+      }
+    }
+    reviewSystem.checkIfActivityIsAtLocation(activityId);
   }
 
   public void endorseReview(String reviewId) {

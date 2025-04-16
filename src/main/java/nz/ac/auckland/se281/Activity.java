@@ -6,7 +6,7 @@ import nz.ac.auckland.se281.Types.Location;
 public class Activity {
 
   private ArrayList<String> list = new ArrayList<>();
-  private ArrayList<String> activities = new ArrayList<>();
+  protected ArrayList<String> activities = new ArrayList<>();
   private int number = 1;
   private String activityName;
   private String activityType;
@@ -17,7 +17,29 @@ public class Activity {
 
   public Activity() {}
 
+  public boolean checkActivityId(String operatorId) {
+    for (String activity : activities) {
+      if (activity.substring(activity.indexOf("["), activity.indexOf("]")).contains(operatorId)) {
+        return true; // Operator ID found
+      }
+    }
+    return false;
+  }
+
+  public String getActivityName(String searchingFor) {
+    System.out.println(activities);
+    for (String activity : activities) {
+      System.out.println(activity);
+      // if (activity.contains(searchingFor)) {
+
+      //   return activity.substring(0, activity.indexOf(" ("));
+      // }
+    }
+    return "HI";
+  }
+
   public void checkIfActivityIsAtLocation(String operatorId) {
+
     // Check if the activity ID already exists
     for (String data : activities) {
       if (data.contains(operatorId)) {
@@ -45,7 +67,7 @@ public class Activity {
     this.count = 0;
   }
 
-  public void printActivity(
+  public String printActivity(
       String activityName, String activityType, String operatorId, String operatorName) {
     // Storing variables
     this.activityName = activityName;
@@ -67,12 +89,13 @@ public class Activity {
     this.operatorId = this.operatorId + "-" + activityId;
 
     // Prints message and saves message for future use
-    MessageCli.ACTIVITY_CREATED.printMessage(
-        this.activityName, this.operatorId, this.activityType, this.operatorName);
+
     String theActivity =
         MessageCli.ACTIVITY_ENTRY.getMessage(
             this.activityName, this.operatorId, this.activityType, this.operatorName);
     activities.add(theActivity);
+
+    return this.operatorId;
   }
 
   public String createThreeDigits() {
