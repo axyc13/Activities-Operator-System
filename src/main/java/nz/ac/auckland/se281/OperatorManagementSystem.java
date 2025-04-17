@@ -10,6 +10,9 @@ public class OperatorManagementSystem {
   private Operator operator = new Operator();
   private Activity activity = new Activity();
   private ReviewSystem reviewSystem = new ReviewSystem();
+  private Review expertReview = new ExpertReview();
+  private Review privateReview = new PrivateReview();
+  private Review publicReview = new PublicReview();
   private ArrayList<String> operatorNames = new ArrayList<>();
   protected ArrayList<String> activityNames = new ArrayList<>();
 
@@ -173,21 +176,41 @@ public class OperatorManagementSystem {
         String activityName =
             activity.substring(activity.indexOf("and ") + 3, activity.length()).trim();
         String reviewId = reviewSystem.createReviewId(activity);
-
-        Review publicReview = new PublicReview();
-        publicReview.getMessage(reviewId, activityName);
+        publicReview.getMessage(reviewId, activityName, options);
       }
     }
-
-    // Review publicReview = new PublicReview();
   }
 
   public void addPrivateReview(String activityId, String[] options) {
-    // TODO implement
+    if (reviewSystem.checkActivityId(activityNames, activityId) == false) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    for (String activity : activityNames) {
+      if (activity.contains(activityId)) {
+        String activityName =
+            activity.substring(activity.indexOf("and ") + 3, activity.length()).trim();
+        String reviewId = reviewSystem.createReviewId(activity);
+        privateReview.getMessage(reviewId, activityName, options);
+      }
+    }
   }
 
   public void addExpertReview(String activityId, String[] options) {
-    // TODO implement
+    if (reviewSystem.checkActivityId(activityNames, activityId) == false) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    for (String activity : activityNames) {
+      if (activity.contains(activityId)) {
+        String activityName =
+            activity.substring(activity.indexOf("and ") + 3, activity.length()).trim();
+        String reviewId = reviewSystem.createReviewId(activity);
+        expertReview.getMessage(reviewId, activityName, options);
+      }
+    }
   }
 
   public void displayReviews(String activityId) {
@@ -201,6 +224,7 @@ public class OperatorManagementSystem {
       }
     }
     reviewSystem.checkIfActivityIsAtLocation(activityId);
+    // publicReview.printReviews();
   }
 
   public void endorseReview(String reviewId) {

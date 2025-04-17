@@ -28,9 +28,6 @@ public class ReviewSystem {
     activityId = activityId.trim().substring(2);
     // Check if the activity ID already exists
 
-    // activityId = activity.getActivityName(activityId);
-    // System.out.println(activityId);
-
     for (String review : reviews) {
       if (review.contains(activityId)) {
         this.count++;
@@ -49,11 +46,11 @@ public class ReviewSystem {
       }
     } else if (count >= 2) {
       MessageCli.REVIEWS_FOUND.printMessage("are", Integer.toString(count), "s", activityId + ":");
-      for (String review : reviews) {
-        if (review.contains(activityId)) {
-          System.out.println(review);
-        }
-      }
+      // for (String review : reviews) {
+      //   if (review.contains(activityId)) {
+      //     System.out.println(review);
+      //   }
+      // }
     }
     this.count = 0;
   }
@@ -75,13 +72,16 @@ public class ReviewSystem {
     list.add(this.activityId);
 
     // Create review id
-    String reviewId = createThreeDigits();
+    String reviewId = createReviewDigits();
     this.activityId = this.activityId + "-" + reviewId;
+
+    String theReview = MessageCli.REVIEW_ADDED.getMessage("Public", activityId, activityName);
+    reviews.add(theReview);
 
     return this.activityId;
   }
 
-  public String createThreeDigits() {
+  public String createReviewDigits() {
     // Creates the review digits
     this.reviewDigits = "R" + this.number;
     this.number = 1;
