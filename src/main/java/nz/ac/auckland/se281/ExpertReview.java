@@ -42,4 +42,14 @@ public class ExpertReview extends Review {
       }
     }
   }
+
+  @Override
+  public void resolveReview(String reviewId, String response) {
+    for (String review : reviews) {
+      if (review.contains(reviewId)) {
+        MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
+        return;
+      }
+    }
+  }
 }

@@ -7,6 +7,8 @@ public class PrivateReview extends Review {
   public ArrayList<String> reviews = new ArrayList<>();
   private String[] options;
   private String reviewId;
+  private boolean isResolved = false;
+  private String response;
 
   @Override
   public void getMessage(String reviewId, String activityName, String[] options) {
@@ -28,6 +30,8 @@ public class PrivateReview extends Review {
         MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(options[3]);
         if (options[4].equals("n")) {
           MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+        } else if (this.isResolved == true) {
+          MessageCli.REVIEW_ENTRY_RESOLVED.printMessage(this.response);
         } else {
           MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(options[1]);
         }
@@ -40,6 +44,18 @@ public class PrivateReview extends Review {
     for (String review : reviews) {
       if (review.contains(reviewId)) {
         MessageCli.REVIEW_NOT_ENDORSED.printMessage(reviewId);
+        return;
+      }
+    }
+  }
+
+  @Override
+  public void resolveReview(String reviewId, String response) {
+    this.response = response;
+    for (String review : reviews) {
+      if (review.contains(reviewId)) {
+        MessageCli.REVIEW_RESOLVED.printMessage(reviewId);
+        this.isResolved = true;
         return;
       }
     }

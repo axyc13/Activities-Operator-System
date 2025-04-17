@@ -240,7 +240,13 @@ public class OperatorManagementSystem {
   }
 
   public void resolveReview(String reviewId, String response) {
-    // TODO implement
+    if (reviewSystem.checkReviewId(reviewId) == false) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    }
+    publicReview.resolveReview(reviewId, response);
+    privateReview.resolveReview(reviewId, response);
+    expertReview.resolveReview(reviewId, response);
   }
 
   public void uploadReviewImage(String reviewId, String imageName) {

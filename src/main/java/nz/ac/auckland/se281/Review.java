@@ -7,4 +7,6 @@ public abstract class Review {
   abstract void printReviews();
 
   abstract void endorseReview(String reviewId);
+
+  abstract void resolveReview(String reviewId, String response);
 }
