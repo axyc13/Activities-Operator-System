@@ -5,13 +5,24 @@ import java.util.ArrayList;
 public class ReviewSystem {
 
   private ArrayList<String> reviews = new ArrayList<>();
-  protected ArrayList<String> test = new ArrayList<>();
+  protected String activityNameandId;
+  protected ArrayList<String> list = new ArrayList<>();
   private int count = 0;
-
-  private Activity activity = new Activity();
   private String activityName;
+  private String activityId;
+  private int number = 1;
+  private String reviewDigits;
 
   public ReviewSystem() {}
+
+  public boolean checkActivityId(ArrayList<String> activities, String activityId) {
+    for (String activity : activities) {
+      if (activity.contains(activityId)) {
+        return true; // Activity ID found
+      }
+    }
+    return false;
+  }
 
   public void checkIfActivityIsAtLocation(String activityId) {
     activityId = activityId.trim().substring(2);
@@ -45,5 +56,35 @@ public class ReviewSystem {
       }
     }
     this.count = 0;
+  }
+
+  public String createReviewId(String activityNameandId) {
+
+    this.activityId = activityNameandId.substring(0, activityNameandId.indexOf("and")).trim();
+
+    this.activityName =
+        activityNameandId
+            .substring(activityNameandId.indexOf("and ") + 3, activityNameandId.length())
+            .trim();
+
+    for (String id : list) {
+      if (this.activityId.equals(id)) {
+        number++;
+      }
+    }
+    list.add(this.activityId);
+
+    // Create review id
+    String reviewId = createThreeDigits();
+    this.activityId = this.activityId + "-" + reviewId;
+
+    return this.activityId;
+  }
+
+  public String createThreeDigits() {
+    // Creates the review digits
+    this.reviewDigits = "R" + this.number;
+    this.number = 1;
+    return this.reviewDigits;
   }
 }

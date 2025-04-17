@@ -124,7 +124,7 @@ public class OperatorManagementSystem {
       }
       if (operatorId.contains(operatorInQuestion)) {
         String activtyId =
-            activity.printActivity(activityName, activityType, operatorId, operators);
+            activity.createActivityId(activityName, activityType, operatorId, operators);
         MessageCli.ACTIVITY_CREATED.printMessage(activityName, activtyId, activityType, operators);
         activityNames.add(activtyId + " and " + activityName);
         return;
@@ -163,7 +163,23 @@ public class OperatorManagementSystem {
   }
 
   public void addPublicReview(String activityId, String[] options) {
-    // TODO implement
+    if (reviewSystem.checkActivityId(activityNames, activityId) == false) {
+      MessageCli.REVIEW_NOT_ADDED_INVALID_ACTIVITY_ID.printMessage(activityId);
+      return;
+    }
+
+    for (String activity : activityNames) {
+      if (activity.contains(activityId)) {
+        String activityName =
+            activity.substring(activity.indexOf("and ") + 3, activity.length()).trim();
+        String reviewId = reviewSystem.createReviewId(activity);
+
+        Review publicReview = new PublicReview();
+        publicReview.getMessage(reviewId, activityName);
+      }
+    }
+
+    // Review publicReview = new PublicReview();
   }
 
   public void addPrivateReview(String activityId, String[] options) {

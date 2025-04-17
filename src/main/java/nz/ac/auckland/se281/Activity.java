@@ -26,18 +26,6 @@ public class Activity {
     return false;
   }
 
-  public String getActivityName(String searchingFor) {
-    System.out.println(activities);
-    for (String activity : activities) {
-      System.out.println(activity);
-      // if (activity.contains(searchingFor)) {
-
-      //   return activity.substring(0, activity.indexOf(" ("));
-      // }
-    }
-    return "HI";
-  }
-
   public void checkIfActivityIsAtLocation(String operatorId) {
 
     // Check if the activity ID already exists
@@ -67,7 +55,7 @@ public class Activity {
     this.count = 0;
   }
 
-  public String printActivity(
+  public String createActivityId(
       String activityName, String activityType, String operatorId, String operatorName) {
     // Storing variables
     this.activityName = activityName;
@@ -88,7 +76,7 @@ public class Activity {
     String activityId = createThreeDigits();
     this.operatorId = this.operatorId + "-" + activityId;
 
-    // Prints message and saves message for future use
+    // Returns activity id and saves full message for future use
 
     String theActivity =
         MessageCli.ACTIVITY_ENTRY.getMessage(

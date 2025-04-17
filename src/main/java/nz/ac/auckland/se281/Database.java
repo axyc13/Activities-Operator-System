@@ -20,7 +20,7 @@ public class Database {
 
   public boolean checkOperatorId(String operatorId) {
     for (String data : list) {
-      System.out.println(data);
+      // System.out.println(data);
       if (data.substring(data.indexOf("('"), data.indexOf("' ")).contains(operatorId)) {
         return true; // Operator ID found
       }
