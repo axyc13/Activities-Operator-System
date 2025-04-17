@@ -260,6 +260,59 @@ public class OperatorManagementSystem {
   }
 
   public void displayTopActivities() {
-    // TODO implement
+    // System.out.println(activityNames); // contains acitivity name and Id
+
+    ArrayList<String> publicReviews = publicReview.getReviews();
+    ArrayList<String> expertReviews = expertReview.getReviews();
+
+    ArrayList<String> allReviews = new ArrayList<>();
+    allReviews.addAll(publicReviews);
+    allReviews.addAll(expertReviews);
+
+    // Storing unique activity Ids and their ratings
+    ArrayList<String> activityIds = new ArrayList<>();
+    ArrayList<ArrayList<Integer>> listOfRatings = new ArrayList<>();
+
+    for (String review : allReviews) {
+      String activityId = review.substring(0, review.indexOf("-R")).trim();
+      int rating = Integer.valueOf(review.substring(review.indexOf("and ") + 4, review.length()));
+
+      // Check if activityId exists in list
+
+      if (activityIds.contains(activityId) == false) {
+        activityIds.add(activityId);
+
+        ArrayList<Integer> ratings = new ArrayList<>();
+        ratings.add(rating);
+
+        listOfRatings.add(ratings);
+      } else {
+
+        // Add ratings to corresponding activityId
+
+        int i = activityIds.indexOf(activityId);
+        listOfRatings.get(i).add(rating);
+      }
+    }
+
+    // Calculate average
+    for (int i = 0; i < activityIds.size(); i++) {
+      String activityId = activityIds.get(i);
+      ArrayList<Integer> ratingsForOneActivity = listOfRatings.get(i);
+
+      int sum = 0;
+      for (int rating : ratingsForOneActivity) {
+        sum += rating;
+      }
+
+      double average = (double) sum / ratingsForOneActivity.size();
+
+      System.out.println("average for " + activityId);
+      System.out.println(average);
+    }
+
+    for (Location location : Location.values()) {
+      MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+    }
   }
 }

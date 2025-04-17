@@ -10,12 +10,15 @@ public class PublicReview extends Review {
   private boolean isEndorsed = false;
 
   @Override
+  public ArrayList<String> getReviews() {
+    return reviews;
+  }
+
+  @Override
   public void getMessage(String reviewId, String activityName, String[] options) {
     this.reviewId = reviewId;
     this.options = options;
-    String theReview =
-        MessageCli.REVIEW_ADDED.getMessage(
-            "Public", reviewId, activityName); // channge to only accept Id and rating
+    String theReview = reviewId + " and " + options[2]; // channge to only accept Id and rating
     reviews.add(theReview);
     MessageCli.REVIEW_ADDED.printMessage("Public", reviewId, activityName);
     return;

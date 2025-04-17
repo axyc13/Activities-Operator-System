@@ -11,10 +11,15 @@ public class PrivateReview extends Review {
   private String response;
 
   @Override
+  public ArrayList<String> getReviews() {
+    return reviews;
+  }
+
+  @Override
   public void getMessage(String reviewId, String activityName, String[] options) {
     this.reviewId = reviewId;
     this.options = options;
-    String theReview = MessageCli.REVIEW_ADDED.getMessage("Public", reviewId, activityName);
+    String theReview = reviewId + " and " + options[2];
     reviews.add(theReview);
     MessageCli.REVIEW_ADDED.printMessage("Private", reviewId, activityName);
     return;

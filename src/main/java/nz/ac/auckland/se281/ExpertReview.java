@@ -11,10 +11,15 @@ public class ExpertReview extends Review {
   private boolean hasImages = false;
 
   @Override
+  public ArrayList<String> getReviews() {
+    return reviews;
+  }
+
+  @Override
   public void getMessage(String reviewId, String activityName, String[] options) {
     this.reviewId = reviewId;
     this.options = options;
-    String theReview = MessageCli.REVIEW_ADDED.getMessage("Public", reviewId, activityName);
+    String theReview = reviewId + " and " + options[1];
     reviews.add(theReview);
     MessageCli.REVIEW_ADDED.printMessage("Expert", reviewId, activityName);
     return;
