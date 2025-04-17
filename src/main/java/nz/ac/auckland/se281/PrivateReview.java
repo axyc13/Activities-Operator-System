@@ -6,9 +6,11 @@ public class PrivateReview extends Review {
 
   public ArrayList<String> reviews = new ArrayList<>();
   private String[] options;
+  private String activityId;
 
   @Override
   public void getMessage(String activityId, String activityName, String[] options) {
+    this.activityId = activityId;
     this.options = options;
     String theReview = MessageCli.REVIEW_ADDED.getMessage("Public", activityId, activityName);
     reviews.add(theReview);
@@ -17,5 +19,19 @@ public class PrivateReview extends Review {
   }
 
   @Override
-  public void printReviews() {}
+  public void printReviews() {
+    for (String review : reviews) {
+      if (review.contains(activityId)) {
+        // REVIEW_ENTRY_HEADER("  * [%s/%s] %s review (%s) by '%s'"),
+        MessageCli.REVIEW_ENTRY_HEADER.printMessage(
+            options[2], "5", "Private", activityId, options[0]);
+        MessageCli.REVIEW_ENTRY_REVIEW_TEXT.printMessage(options[3]);
+        if (options[4].equals("n")) {
+          MessageCli.REVIEW_ENTRY_RESOLVED.printMessage("-");
+        } else {
+          MessageCli.REVIEW_ENTRY_FOLLOW_UP.printMessage(options[1]);
+        }
+      }
+    }
+  }
 }

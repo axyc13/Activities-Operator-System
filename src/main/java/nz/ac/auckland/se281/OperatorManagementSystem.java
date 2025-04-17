@@ -224,7 +224,9 @@ public class OperatorManagementSystem {
       }
     }
     reviewSystem.checkIfActivityIsAtLocation(activityId);
-    // publicReview.printReviews();
+    publicReview.printReviews();
+    privateReview.printReviews();
+    expertReview.printReviews();
   }
 
   public void endorseReview(String reviewId) {

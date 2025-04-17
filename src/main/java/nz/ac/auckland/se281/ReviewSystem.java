@@ -38,14 +38,14 @@ public class ReviewSystem {
       // REVIEWS_FOUND("There %s %s review%s for activity '%s'."),
       MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", activityId);
     } else if (count == 1) {
-      MessageCli.REVIEWS_FOUND.printMessage("is", "1", "", activityId + ":");
-      for (String review : reviews) {
-        if (review.contains(activityId)) {
-          System.out.println(review);
-        }
-      }
+      MessageCli.REVIEWS_FOUND.printMessage("is", "1", "", activityId + "");
+      // for (String review : reviews) {
+      //   if (review.contains(activityId)) {
+      //     System.out.println(review);
+      //   }
+      // }
     } else if (count >= 2) {
-      MessageCli.REVIEWS_FOUND.printMessage("are", Integer.toString(count), "s", activityId + ":");
+      MessageCli.REVIEWS_FOUND.printMessage("are", Integer.toString(count), "s", activityId + "");
       // for (String review : reviews) {
       //   if (review.contains(activityId)) {
       //     System.out.println(review);
