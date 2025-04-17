@@ -9,4 +9,6 @@ public abstract class Review {
   abstract void endorseReview(String reviewId);
 
   abstract void resolveReview(String reviewId, String response);
+
+  abstract void uploadImage (String reviewId, String imageName);
 }

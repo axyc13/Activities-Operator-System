@@ -13,7 +13,9 @@ public class PublicReview extends Review {
   public void getMessage(String reviewId, String activityName, String[] options) {
     this.reviewId = reviewId;
     this.options = options;
-    String theReview = MessageCli.REVIEW_ADDED.getMessage("Public", reviewId, activityName);
+    String theReview =
+        MessageCli.REVIEW_ADDED.getMessage(
+            "Public", reviewId, activityName); // channge to only accept Id and rating
     reviews.add(theReview);
     MessageCli.REVIEW_ADDED.printMessage("Public", reviewId, activityName);
     return;
@@ -50,6 +52,16 @@ public class PublicReview extends Review {
     for (String review : reviews) {
       if (review.contains(reviewId)) {
         MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
+        return;
+      }
+    }
+  }
+
+  @Override
+  public void uploadImage(String reviewId, String imageName) {
+    for (String review : reviews) {
+      if (review.contains(reviewId)) {
+        MessageCli.REVIEW_IMAGE_NOT_ADDED_NOT_EXPERT.printMessage(reviewId);
         return;
       }
     }

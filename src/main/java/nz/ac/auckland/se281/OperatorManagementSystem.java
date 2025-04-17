@@ -250,7 +250,13 @@ public class OperatorManagementSystem {
   }
 
   public void uploadReviewImage(String reviewId, String imageName) {
-    // TODO implement
+    if (reviewSystem.checkReviewId(reviewId) == false) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    }
+    publicReview.uploadImage(reviewId, imageName);
+    privateReview.uploadImage(reviewId, imageName);
+    expertReview.uploadImage(reviewId, imageName);
   }
 
   public void displayTopActivities() {

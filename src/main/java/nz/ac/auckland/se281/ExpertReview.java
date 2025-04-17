@@ -7,6 +7,8 @@ public class ExpertReview extends Review {
   public ArrayList<String> reviews = new ArrayList<>();
   private String[] options;
   private String reviewId;
+  public ArrayList<String> images = new ArrayList<>();
+  private boolean hasImages = false;
 
   @Override
   public void getMessage(String reviewId, String activityName, String[] options) {
@@ -29,6 +31,12 @@ public class ExpertReview extends Review {
         if (options[3].equals("y")) {
           MessageCli.REVIEW_ENTRY_RECOMMENDED.printMessage();
         }
+        if (this.hasImages == true) {
+          String images = this.images.toString();
+          images = images.substring(1, images.length() - 1);
+          images = images.replace(", ", ",");
+          MessageCli.REVIEW_ENTRY_IMAGES.printMessage(images);
+        }
       }
     }
   }
@@ -48,6 +56,18 @@ public class ExpertReview extends Review {
     for (String review : reviews) {
       if (review.contains(reviewId)) {
         MessageCli.REVIEW_NOT_RESOLVED.printMessage(reviewId);
+        return;
+      }
+    }
+  }
+
+  @Override
+  public void uploadImage(String reviewId, String imageName) {
+    for (String review : reviews) {
+      if (review.contains(reviewId)) {
+        MessageCli.REVIEW_IMAGE_ADDED.printMessage(imageName, reviewId);
+        images.add(imageName);
+        this.hasImages = true;
         return;
       }
     }

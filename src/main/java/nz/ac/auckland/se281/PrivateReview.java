@@ -60,4 +60,14 @@ public class PrivateReview extends Review {
       }
     }
   }
+
+  @Override
+  public void uploadImage(String reviewId, String imageName) {
+    for (String review : reviews) {
+      if (review.contains(reviewId)) {
+        MessageCli.REVIEW_IMAGE_NOT_ADDED_NOT_EXPERT.printMessage(reviewId);
+        return;
+      }
+    }
+  }
 }
