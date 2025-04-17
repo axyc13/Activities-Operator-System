@@ -55,6 +55,15 @@ public class ReviewSystem {
     this.count = 0;
   }
 
+  public boolean checkReviewId(String reviewId) {
+    for (String review : reviews) {
+      if (review.contains(reviewId)) {
+        return true; // Operator ID found
+      }
+    }
+    return false;
+  }
+
   public String createReviewId(String activityNameandId) {
 
     this.activityId = activityNameandId.substring(0, activityNameandId.indexOf("and")).trim();

@@ -230,7 +230,13 @@ public class OperatorManagementSystem {
   }
 
   public void endorseReview(String reviewId) {
-    // TODO implement
+    if (reviewSystem.checkReviewId(reviewId) == false) {
+      MessageCli.REVIEW_NOT_FOUND.printMessage(reviewId);
+      return;
+    }
+    publicReview.endorseReview(reviewId);
+    privateReview.endorseReview(reviewId);
+    expertReview.endorseReview(reviewId);
   }
 
   public void resolveReview(String reviewId, String response) {
