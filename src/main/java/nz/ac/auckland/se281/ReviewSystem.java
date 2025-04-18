@@ -18,16 +18,16 @@ public class ReviewSystem {
   public boolean checkActivityId(ArrayList<String> activities, String activityId) {
     for (String activity : activities) {
       if (activity.contains(activityId)) {
-        return true; // Activity ID found
+        return true; // activityId found
       }
     }
     return false;
   }
 
-  public void checkIfActivityIsAtLocation(String activityId) {
+  public void numReviewsAtLocation(String activityId) {
     activityId = activityId.trim().substring(2);
-    // Check if the activity ID already exists
 
+    // Counts how many reviews exist under the input
     for (String review : reviews) {
       if (review.contains(activityId)) {
         this.count++;
@@ -35,22 +35,11 @@ public class ReviewSystem {
     }
 
     if (count == 0) {
-      // REVIEWS_FOUND("There %s %s review%s for activity '%s'."),
       MessageCli.REVIEWS_FOUND.printMessage("are", "no", "s", activityId);
     } else if (count == 1) {
       MessageCli.REVIEWS_FOUND.printMessage("is", "1", "", activityId + "");
-      // for (String review : reviews) {
-      //   if (review.contains(activityId)) {
-      //     System.out.println(review);
-      //   }
-      // }
     } else if (count >= 2) {
       MessageCli.REVIEWS_FOUND.printMessage("are", Integer.toString(count), "s", activityId + "");
-      // for (String review : reviews) {
-      //   if (review.contains(activityId)) {
-      //     System.out.println(review);
-      //   }
-      // }
     }
     this.count = 0;
   }
@@ -58,21 +47,21 @@ public class ReviewSystem {
   public boolean checkReviewId(String reviewId) {
     for (String review : reviews) {
       if (review.contains(reviewId)) {
-        return true; // Operator ID found
+        return true; // reviewId found
       }
     }
     return false;
   }
 
   public String createReviewId(String activityNameandId) {
-
+    // Input is in the form of "activityId and activityName" so we separate them
     this.activityId = activityNameandId.substring(0, activityNameandId.indexOf("and")).trim();
-
     this.activityName =
         activityNameandId
             .substring(activityNameandId.indexOf("and ") + 3, activityNameandId.length())
             .trim();
 
+    // Increments if a review already exists for that activty
     for (String id : list) {
       if (this.activityId.equals(id)) {
         number++;
@@ -84,6 +73,7 @@ public class ReviewSystem {
     String reviewId = createReviewDigits();
     this.activityId = this.activityId + "-" + reviewId;
 
+    // n.b: Only important thing saved here is activityId
     String theReview = MessageCli.REVIEW_ADDED.getMessage("Public", activityId, activityName);
     reviews.add(theReview);
 

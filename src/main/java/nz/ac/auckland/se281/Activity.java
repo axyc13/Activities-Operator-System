@@ -20,21 +20,21 @@ public class Activity {
   public boolean checkActivityId(String operatorId) {
     for (String activity : activities) {
       if (activity.substring(activity.indexOf("["), activity.indexOf("]")).contains(operatorId)) {
-        return true; // Operator ID found
+        return true; // operatorId found
       }
     }
     return false;
   }
 
-  public void checkIfActivityIsAtLocation(String operatorId) {
-
-    // Check if the activity ID already exists
+  public void numActivitiesAtLocation(String operatorId) {
+    // Counts how many activities exist under the input
     for (String data : activities) {
       if (data.contains(operatorId)) {
         this.count++;
       }
     }
 
+    // Prints the amount of activities present
     if (count == 0) {
       MessageCli.ACTIVITIES_FOUND.printMessage("are", "no", "ies", ".");
     } else if (count == 1) {
@@ -63,8 +63,7 @@ public class Activity {
     this.operatorId = operatorId;
     this.operatorName = operatorName;
 
-    // Add operator id into an array list, check if it already exists and increment the three digits
-    // accordingly
+    // Check if operatorId is in list, increment the three digits accordingly
     for (String id : list) {
       if (this.operatorId.equals(id)) {
         number++;
@@ -76,7 +75,7 @@ public class Activity {
     String activityId = createThreeDigits();
     this.operatorId = this.operatorId + "-" + activityId;
 
-    // Returns activity id and saves full message for future use
+    // Returns activity id and saves message for future use
 
     String theActivity =
         MessageCli.ACTIVITY_ENTRY.getMessage(
@@ -94,20 +93,20 @@ public class Activity {
   }
 
   public void printDatabase(String keyword, String caseTwo) {
+    // Prints all activities or prints select activities
 
-    // Prints specific/all data
-    if (keyword.equals("*")) {
+    if (keyword.equals("*")) { // Case 1: prints all
       for (String activity : activities) {
         System.out.println(activity);
       }
-    } else if (caseTwo != null) { // Case where we are searching with location name
-
+    } else if (caseTwo != null) { // Case 2: where we are searching with location name
       for (String activity : activities) {
-        // Extracting the location from the operator ID
+        // Extracting the location from the Id, first isolate code
         int start = activity.indexOf('[') + 1;
         int end = activity.indexOf('/');
         String code = activity.substring(start, end);
 
+        // Split the code to get the location acronym
         String[] parts = code.split("-");
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
@@ -117,12 +116,14 @@ public class Activity {
           System.out.println(activity);
         }
       }
-    } else { // Case where we are searching with activity snippet OR location name has a space
+    } else { // Case 3: where we are searching with activity snippet OR location name has a space
       for (String activity : activities) {
+        // Extracting the location from the Id, first isolate code
         int start = activity.indexOf('[') + 1;
         int end = activity.indexOf('/');
         String code = activity.substring(start, end);
 
+        // Split the code to get the location acronym
         String[] parts = code.split("-");
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
@@ -139,8 +140,8 @@ public class Activity {
   }
 
   public void countData(String keyword, String caseTwo) {
-    // Counts the total amount of data and prints accordingly
-    if (keyword.equals("*") && caseTwo == null) {
+    // Counts and prints the total amount of activities and prints
+    if (keyword.equals("*") && caseTwo == null) { // Case 1: where we are searching for all
       for (String place : activities) {
         this.count++;
       }
@@ -152,14 +153,14 @@ public class Activity {
         MessageCli.ACTIVITIES_FOUND.printMessage("are", Integer.toString(count), "ies", ":");
       }
       count = 0;
-    } else if (caseTwo != null) { // Case where we are searching with location name
-      System.out.println("CASE TWO");
+    } else if (caseTwo != null) { // Case 2: where we are searching with location name
       for (String activity : activities) {
-        // Extracting the location from the operator ID
+        // Extracting the location from the Id, first isolate code
         int start = activity.indexOf('[') + 1;
         int end = activity.indexOf('/');
         String code = activity.substring(start, end);
 
+        // Split the code to get the location acronym
         String[] parts = code.split("-");
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
@@ -178,12 +179,13 @@ public class Activity {
       }
       count = 0;
     } else { // Case where we are searching with activity snippet OR location name has a space
-      System.out.println("CASE THREE");
       for (String activity : activities) {
+        // Extracting the location from the Id, first isolate code
         int start = activity.indexOf('[') + 1;
         int end = activity.indexOf('/');
         String code = activity.substring(start, end);
 
+        // Split the code to get the location acronym
         String[] parts = code.split("-");
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
