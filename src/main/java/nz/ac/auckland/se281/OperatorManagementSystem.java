@@ -262,6 +262,7 @@ public class OperatorManagementSystem {
   public void displayTopActivities() {
     // System.out.println(activityNames); // contains acitivity name and Id
 
+    // Extract the reviews from public and expert reviews
     ArrayList<String> publicReviews = publicReview.getReviews();
     ArrayList<String> expertReviews = expertReview.getReviews();
 
@@ -269,7 +270,8 @@ public class OperatorManagementSystem {
     allReviews.addAll(publicReviews);
     allReviews.addAll(expertReviews);
 
-    // Storing unique activity Ids and their ratings
+    // Storing ratings under their corresponding activityId
+    // i.e. activityId[0]'s ratings will be listOfRatings[0]
     ArrayList<String> activityIds = new ArrayList<>();
     ArrayList<ArrayList<Integer>> listOfRatings = new ArrayList<>();
 
@@ -278,26 +280,25 @@ public class OperatorManagementSystem {
       int rating = Integer.valueOf(review.substring(review.indexOf("and ") + 4, review.length()));
 
       // Check if activityId exists in list
-
-      if (activityIds.contains(activityId) == false) {
+      if (activityIds.contains(activityId) == false) { // Doesn't exist, add to list
         activityIds.add(activityId);
 
         ArrayList<Integer> ratings = new ArrayList<>();
         ratings.add(rating);
-
         listOfRatings.add(ratings);
-      } else {
 
-        // Add ratings to corresponding activityId
-
+      } else { // Exists, add ratings to their corresponding activityId
         int i = activityIds.indexOf(activityId);
         listOfRatings.get(i).add(rating);
       }
     }
 
-    // Calculate average
+    // Calculate the average for each activityID and store in the corresponding index of a new array
+    // list
+    ArrayList<Double> averages = new ArrayList<>();
+
     for (int i = 0; i < activityIds.size(); i++) {
-      String activityId = activityIds.get(i);
+      // String activityId = activityIds.get(i);
       ArrayList<Integer> ratingsForOneActivity = listOfRatings.get(i);
 
       int sum = 0;
@@ -306,10 +307,37 @@ public class OperatorManagementSystem {
       }
 
       double average = (double) sum / ratingsForOneActivity.size();
+      averages.add(average);
 
-      System.out.println("average for " + activityId);
-      System.out.println(average);
+      // System.out.println("average for " + activityId);
+      // System.out.println(average);
     }
+
+    // Storing highest average rating under their corresponding locations, logic similar to previous
+    ArrayList<String> locations = new ArrayList<>();
+    ArrayList<Double> highestAverages = new ArrayList<>();
+
+    for (int i = 0; i < activityIds.size(); i++) {
+      String activityId = activityIds.get(i);
+      double currentAverage = averages.get(i);
+
+      String[] parts = activityId.split("-");
+      String location = parts[1];
+
+      // Check if location exists in list
+
+      if (locations.contains(location) == false) { // Doesn't exist, add to lists
+        locations.add(location);
+        highestAverages.add(currentAverage);
+      } else { // Exists, compare averages
+        int locationIndex = locations.indexOf(location);
+        if (currentAverage > highestAverages.get(locationIndex)) {
+          highestAverages.set(locationIndex, currentAverage);
+        }
+      }
+    }
+    System.out.println("Locations: " + locations);
+    System.out.println("Highest Averages: " + highestAverages);
 
     for (Location location : Location.values()) {
       MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
