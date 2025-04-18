@@ -131,7 +131,7 @@ public class Activity {
                 .toLowerCase()
                 .substring(0, activity.indexOf("offered by "))
                 .contains(keyword.toLowerCase())
-            || locationName.contains(keyword)) {
+            || locationName.toLowerCase().contains(keyword.toLowerCase())) {
           System.out.println(activity);
         }
       }
@@ -187,13 +187,11 @@ public class Activity {
         String[] parts = code.split("-");
         String locationCode = parts[1];
         String locationName = Location.fromString(locationCode).getFullName();
-        // System.out.println(locationName);
-
         if (activity
                 .toLowerCase()
                 .substring(0, activity.indexOf("offered by "))
                 .contains(keyword.toLowerCase())
-            || locationName.contains(keyword)) {
+            || locationName.toLowerCase().contains(keyword.toLowerCase())) {
           this.count++;
         }
       }
