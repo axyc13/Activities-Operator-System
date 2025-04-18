@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class ExpertReview extends Review {
 
-  public ArrayList<String> reviews = new ArrayList<>();
+  protected ArrayList<String> reviews = new ArrayList<>();
   private String[] options;
   private ArrayList<String[]> allTheOptions = new ArrayList<>();
   private String reviewId;
-  public ArrayList<String> images = new ArrayList<>();
+  protected ArrayList<String> images = new ArrayList<>();
   private boolean hasImages = false;
 
   @Override

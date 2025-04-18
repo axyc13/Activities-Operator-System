@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PrivateReview extends Review {
 
-  public ArrayList<String> reviews = new ArrayList<>();
+  protected ArrayList<String> reviews = new ArrayList<>();
   private String[] options;
   private ArrayList<String[]> allTheOptions = new ArrayList<>();
   private String reviewId;
