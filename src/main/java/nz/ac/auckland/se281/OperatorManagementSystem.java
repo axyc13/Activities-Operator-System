@@ -316,6 +316,7 @@ public class OperatorManagementSystem {
     // Storing highest average rating under their corresponding locations, logic similar to previous
     ArrayList<String> locations = new ArrayList<>();
     ArrayList<Double> highestAverages = new ArrayList<>();
+    ArrayList<String> highestRatedActivities = new ArrayList<>();
 
     for (int i = 0; i < activityIds.size(); i++) {
       String activityId = activityIds.get(i);
@@ -329,18 +330,44 @@ public class OperatorManagementSystem {
       if (locations.contains(location) == false) { // Doesn't exist, add to lists
         locations.add(location);
         highestAverages.add(currentAverage);
+        highestRatedActivities.add(activityId);
       } else { // Exists, compare averages
         int locationIndex = locations.indexOf(location);
+
         if (currentAverage > highestAverages.get(locationIndex)) {
           highestAverages.set(locationIndex, currentAverage);
+          highestRatedActivities.set(locationIndex, activityId);
         }
       }
     }
+
     System.out.println("Locations: " + locations);
     System.out.println("Highest Averages: " + highestAverages);
+    System.out.println("Highest Rated Activities: " + highestRatedActivities);
+
+    if (allReviews.size() == 0) {
+      for (Location location : Location.values()) {
+        MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+      }
+      return;
+    }
 
     for (Location location : Location.values()) {
-      MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+      for (int i = 0; i < locations.size(); i++) {
+        if (location.getLocationAbbreviation().equals(locations.get(i))) {
+
+          for (String activity : activityNames) {
+            if (activity.contains(highestRatedActivities.get(i))) {
+              String activityName =
+                  activity.substring(activity.indexOf("and ") + 3, activity.length()).trim();
+              MessageCli.TOP_ACTIVITY.printMessage(
+                  location.getFullName(), activityName, Double.toString(highestAverages.get(i)));
+            }
+          }
+        } else {
+          MessageCli.NO_REVIEWED_ACTIVITIES.printMessage(location.getFullName());
+        }
+      }
     }
   }
 }
